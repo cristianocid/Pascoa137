@@ -2,9 +2,12 @@
 
 import br.com.iterasys.Calculadora;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 // Classe
 public class TesteCalculadora {
@@ -28,6 +31,24 @@ public class TesteCalculadora {
         assertEquals(resultadoEsperado, resultadoAtual);
         System.out.println("Teste Soma: "+num1 +"+"+ num2 +" = "+ resultadoAtual);
     }
+
+    // Teste usando Lista
+    @ParameterizedTest
+    @CsvFileSource(resources = "src/teste/resources/csv/massaSomar.csv")
+    public void testeSomarDoisNumerosLendoLista(String txtNum1, String txtNum2, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.somarDoisNumeros( Integer.valueOf(txtNum1), Integer.valueOf(txtNum2));
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Soma: "+txtNum1 +"+"+ txtNum2 +" = "+ resultadoAtual);
+    }
+
+
     @Test
     public void testeSubtrairDoisNumeros(){
         // Configura
