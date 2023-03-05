@@ -65,6 +65,23 @@ public class TesteCalculadora {
         assertEquals(resultadoEsperado, resultadoAtual);
         System.out.println("Teste Subtrair: "+num1 +"-"+ num2 +" = "+ resultadoAtual);
     }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaSubtrair.csv")
+    public void testeSubtrairDoisNumerosLendoLista(String txtNum1, String txtNum2, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.subtrairDoisNumeros( Integer.valueOf(txtNum1), Integer.valueOf(txtNum2));
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Soma: "+txtNum1 +"+"+ txtNum2 +" = "+ resultadoAtual);
+    }
+
+
     @Test
     public void testeMultiplicarDoisNumeros(){
         // Configura
@@ -81,6 +98,23 @@ public class TesteCalculadora {
         assertEquals(resultadoEsperado, resultadoAtual);
         System.out.println("Teste Multiplicar: "+num1 +"*"+ num2 +" = "+ resultadoAtual);
     }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaMultiplicar.csv")
+    public void testeMultiplicarDoisNumerosLendoLista(String txtNum1, String txtNum2, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.multiplicarDoisNumeros( Integer.valueOf(txtNum1), Integer.valueOf(txtNum2));
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Soma: "+txtNum1 +"+"+ txtNum2 +" = "+ resultadoAtual);
+    }
+
+
     @Test
     public void testeDividirDoisNumeros(){
         // Configura
@@ -112,5 +146,20 @@ public class TesteCalculadora {
         // Valida
         assertEquals(resultadoEsperado, (resultadoAtual));
         System.out.println("Teste Dividir: "+numA +"/"+ numB +" = "+ resultadoAtual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaDividir.csv")
+    public void testeDividirDoisNumerosLendoLista(String txtNum1, String txtNum2, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.dividirDoisNumeros( Integer.valueOf(txtNum1), Integer.valueOf(txtNum2));
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Soma: "+txtNum1 +"+"+ txtNum2 +" = "+ resultadoAtual);
     }
 }
