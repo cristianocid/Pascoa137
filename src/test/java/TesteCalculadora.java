@@ -34,7 +34,7 @@ public class TesteCalculadora {
 
     // Teste usando Lista
     @ParameterizedTest
-    @CsvFileSource(resources = "src/teste/resources/csv/massaSomar.csv")
+    @CsvFileSource(files = "src/test/resources/csv/massaSomar.csv")
     public void testeSomarDoisNumerosLendoLista(String txtNum1, String txtNum2, String resultadoEsperado){
         // Configura
         // Os dados de entrada e o resultado esperado vem da Lista
