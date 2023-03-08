@@ -78,7 +78,7 @@ public class TesteCalculadora {
 
         // Valida
         assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
-        System.out.println("Teste Soma: "+txtNum1 +"+"+ txtNum2 +" = "+ resultadoAtual);
+        System.out.println("Teste Subtrair: "+txtNum1 +"-"+ txtNum2 +" = "+ resultadoAtual);
     }
 
 
@@ -111,7 +111,7 @@ public class TesteCalculadora {
 
         // Valida
         assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
-        System.out.println("Teste Soma: "+txtNum1 +"+"+ txtNum2 +" = "+ resultadoAtual);
+        System.out.println("Teste Multiplicar: "+txtNum1 +"*"+ txtNum2 +" = "+ resultadoAtual);
     }
 
 
@@ -160,6 +160,6 @@ public class TesteCalculadora {
 
         // Valida
         assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
-        System.out.println("Teste Soma: "+txtNum1 +"+"+ txtNum2 +" = "+ resultadoAtual);
+        System.out.println("Teste Dividir: "+txtNum1 +"/"+ txtNum2 +" = "+ resultadoAtual);
     }
 }
