@@ -2,7 +2,11 @@
 package apiTest;
 
 // Bibliotecas
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer;
+
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,6 +16,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 
 // Classe
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class testUser{
     // Atributos
     static String ct = "application/json"; // content type
@@ -25,6 +30,7 @@ public class testUser{
 
     // Funções de Testes
     @Test
+    @Order(1)
     public void testarIncluirUser() throws IOException {
         // carregar os dados do nosso json
         String jsonBody = lerArquivoJson("src/test/resources/json/user1.json");
@@ -47,6 +53,7 @@ public class testUser{
     }
 
     @Test
+    @Order(2)
     public void testarConsultarUser(){
         String username = "josue";
 
@@ -62,6 +69,7 @@ public class testUser{
                 .body("firstName", is(username));
     }
     @Test
+    @Order(3)
     public void alterarUser() throws IOException {
         String jsonBody = lerArquivoJson("src/test/resources/json/user2.json");
 
@@ -82,6 +90,7 @@ public class testUser{
                 .body("message", is(userId));
     }
     @Test
+    @Order(4)
     public void testarExcluirUser(){
         String username = "josue";
 
