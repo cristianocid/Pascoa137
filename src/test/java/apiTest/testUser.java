@@ -14,8 +14,8 @@ import static org.hamcrest.Matchers.is;
 // Classe
 public class testUser{
     // Atributos
-    String ct = "application/json"; // content type
-    String uriUser = "https://petstore.swagger.io/v2/user/"; // url do usuario
+    static String ct = "application/json"; // content type
+    static String uriUser = "https://petstore.swagger.io/v2/user/"; // url do usuario
 
     // Funções e Metodos
     // Funções de Apoio
@@ -60,5 +60,40 @@ public class testUser{
                 .body("id", is(1371739181))
                 .body("username", is(username))
                 .body("firstName", is(username));
+    }
+    @Test
+    public void alterarUser() throws IOException {
+        String jsonBody = lerArquivoJson("src/test/resources/json/user2.json");
+
+        String userId = "1371739181";
+        String username = "josue";
+
+        given()
+                .contentType(ct)
+                .log().all()
+                .body(jsonBody)
+        .when()
+                .put(uriUser + username)
+        .then()
+                .log().all()
+                .statusCode(200)
+                .body("code", is(200))
+                .body("type", is("unknown"))
+                .body("message", is(userId));
+    }
+    @Test
+    public void testarExcluirUser(){
+        String username = "josue";
+
+        given()
+                .contentType(ct)
+                .log().all()
+        .when()
+                .delete(uriUser + username)
+        .then()
+                .statusCode(200)
+                .body("code", is(200))
+                .body("type", is("unknown"))
+                .body("message", is(username));
     }
 }
