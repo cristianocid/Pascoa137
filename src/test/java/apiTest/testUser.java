@@ -2,6 +2,7 @@
 package apiTest;
 
 // Bibliotecas
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -13,7 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 // Classe
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -104,5 +105,31 @@ public class testUser{
                 .body("code", is(200))
                 .body("type", is("unknown"))
                 .body("message", is(username));
+    }
+
+    @Test
+    @Order(5)
+    public void testarLogin() {
+        String username = "josue";
+        String password = "abcdef";
+
+        Response resp = (Response) given()
+                .contentType(ct)
+                .log().all()
+        .when()
+                .get(uriUser + "login?username=" + username + "&password=" + password)
+        .then()
+                .log().all()
+                .statusCode(200)
+                .body("code", is(200))
+                .body("type", is("unknown"))
+                .body("message", containsString("logged in user session:"))
+                .body("message", hasLength(36))
+        .extract();
+
+
+        // Extração do token da resposta
+        String token = resp.jsonPath().getString("message").substring(23);
+        System.out.println("Conteudo do token: " + token);
     }
 }
