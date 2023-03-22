@@ -2,19 +2,24 @@
 package apiTest;
 
 // Bibliotecas
+
 import io.restassured.response.Response;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.MethodOrderer;
-
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
+
+import com.google.gson.Gson;
 
 // Classe
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -108,7 +113,7 @@ public class testUser{
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     public void testarLogin() {
         String username = "josue";
         String password = "abcdef";
@@ -132,4 +137,48 @@ public class testUser{
         String token = resp.jsonPath().getString("message").substring(23);
         System.out.println("Conteudo do token: " + token);
     }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaUser.csv", numLinesToSkip = 1, delimiter = ',')
+    @Order(5)
+    public void testarIncluirUserCSV(
+            String id,
+            String username,
+            String firstName,
+            String lastName,
+            String email,
+            String password,
+            String phone,
+            String userStatus)
+            {
+
+        User user = new User();
+
+        user.id = id;
+        user.username = username;
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.email = email;
+        user.password = password;
+        user.phone = phone;
+        user.userStatus = userStatus;
+
+        Gson gson = new Gson();
+        String jsonBody = gson.toJson(user);
+
+        // realizar o teste
+        given()                                       // Dado que
+                .contentType(ct)                      // o tipo de conteudo
+                .log().all()                          // mostre tudo
+                .body(jsonBody)                       // corpo da requisiçãp
+        .when()                                       // Quando
+                .post(uriUser)                        // Endpoint / Onde
+        .then()                                       // Então
+                .log().all()                          // mostre tudo na volta
+                .statusCode(200)                    // comunicação ida e volta ok
+                .body("code", is(200))        // tag code é 200
+                .body("type", is("unknown"))  // tag type é "unknown"
+                .body("message", is(id));           // message é o userId
+    }
+
 }
