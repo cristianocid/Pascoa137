@@ -162,4 +162,154 @@ public class TesteCalculadora {
         assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
         System.out.println("Teste Dividir: "+txtNum1 +"/"+ txtNum2 +" = "+ resultadoAtual);
     }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaAreaQuadrado.csv")
+    public void testeAreaQuadradoLendoLista(Double aresta, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.areaQuadrado(aresta);
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Area do Quadrado: "+aresta +" * "+ aresta +" = "+ resultadoAtual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaVolumeCubo.csv")
+    public void testeVolumeCuboLendoLista(Double aresta, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.volumeCubo(aresta);
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Volume do Cubo: "+aresta +" * "+ aresta +" * "+ aresta +" = "+ resultadoAtual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaAreaRetangulo.csv")
+    public void testeAreaRetanguloLendoLista(Double base, Double altura, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.areaRetangulo(base, altura);
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Area do Retangulo: "+base +" * "+ altura +" = "+ resultadoAtual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaVolumeParalelepipedo.csv")
+    public void testeVolumeParalelepipedoLendoLista(Double base, Double altura, Double comprimento, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.volumeParalelepipedo(base, altura, comprimento);
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Volume Paralelepipedo: "+base +" * "+ altura +" * "+ comprimento +" = "+ resultadoAtual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaAreaTriangulo.csv")
+    public void testeAreaTrianguloLendoLista(Double base, Double altura, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.areaTriangulo(base, altura);
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Area do Triangulo: "+base +" * "+ altura +" /2 "+ " = "+ resultadoAtual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaVolumePiramideTriangular.csv")
+    public void testeVolumePiramideTriangularLendoLista(Double base, Double altura, Double comprimento, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.volumePiramideTriangular(base, altura, comprimento);
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Volume Piramide Triangular: "+base +" * "+ altura +" * "+ comprimento +" /3 " +" = "+ resultadoAtual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaVolumePiramideQuadrada.csv")
+    public void testeVolumePiramideQuadradaLendoLista(Double base, Double comprimento, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.volumePiramideQuadrada(base, comprimento);
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Volume Piramide Quadrada: "+base +" * "+ base +" * " + comprimento +" /3 " +" = "+ resultadoAtual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaVolumePiramideRetangular.csv")
+    public void testeVolumePiramideRetangularLendoLista(Double base, Double altura, Double comprimento, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.volumePiramideRetangular(base, altura, comprimento);
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Volume Piramide Retangular: "+base +" * "+ altura +" * " + comprimento +" /3 " +" = "+ resultadoAtual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaAreaCirculo.csv")
+    public void testeAreaCirculoLendoLista(Double raio, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.areaCirculo(raio);
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Area do Circulo: "+raio +" * "+ raio +" * "+ "3,14" +" = "+ resultadoAtual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/csv/massaVolumeCilindro.csv")
+    public void testeVolumeCilindroLendoLista(Double raio,Double altura, String resultadoEsperado){
+        // Configura
+        // Os dados de entrada e o resultado esperado vem da Lista
+
+
+        // Executa
+        double resultadoAtual = Calculadora.volumeCilindro(raio, altura);
+
+        // Valida
+        assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
+        System.out.println("Teste Volume do Cilindro: "+raio +" * "+ raio +" * "+ "3,14" +" * "+ altura +" = "+ resultadoAtual);
+    }
 }
