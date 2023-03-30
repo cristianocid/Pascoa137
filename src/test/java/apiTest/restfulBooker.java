@@ -21,9 +21,9 @@ public class restfulBooker {
     static String uriUser = "https://restful-booker.herokuapp.com/auth"; // url do usuario
     static String uriCreateBooking = "https://restful-booker.herokuapp.com/booking"; // url criar Book
     static String uriConsultarBooking = "https://restful-booker.herokuapp.com/booking/";
+    String cookieToken = "622ff4f710b4ad1";
 
-    static String cookieToken = "6de4795753f0fd9";
-    static String idBooking = "11010";                 // codigo id do Booking
+    static String idBooking = "6849";                 // codigo id do Booking
     // Funções e Metodos
     // Funções de Apoio
     public static String lerArquivoJson(String arquivoJson) throws IOException {
@@ -109,7 +109,7 @@ public class restfulBooker {
 
         given()
                 .contentType(ct)
-                .cookie("token", "6de4795753f0fd9" ) // Adiciona o cabeçalho de cookie
+                .header("Cookie","token=" + cookieToken ) // Adiciona o cabeçalho de cookie
                 .log().all()
                 .body(jsonBody)
                 .when()
@@ -124,19 +124,16 @@ public class restfulBooker {
 
     @Test
     @Order(5)
-    public void testarExcluirUser(){
-        String username = "josue";
+    public void testarExcluirBoking(){
 
         given()
                 .contentType(ct)
+                .header("Cookie","token=" + cookieToken ) // Adiciona o cabeçalho de cookie
                 .log().all()
                 .when()
-                .delete(uriUser + username)
+                .delete(uriConsultarBooking + idBooking)
                 .then()
-                .statusCode(200)
-                .body("code", is(200))
-                .body("type", is("unknown"))
-                .body("message", is(username));
+                .statusCode(201);
     }
 
 }
