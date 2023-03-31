@@ -47,7 +47,7 @@ public class ComprarPassagemSIDE {
             WebElement dropdown = driver.findElement(By.name("fromPort"));
             dropdown.findElement(By.xpath("//option[. = 'São Paolo']")).click();
         }
-        driver.findElement(By.name("toPort")).click();
+        driver.findElement(By.name("toPort")).click(); //a
         {
             WebElement dropdown = driver.findElement(By.name("toPort"));
             dropdown.findElement(By.xpath("//option[. = 'Berlin']")).click();
