@@ -1,17 +1,15 @@
 package apiTest;
 
-import com.google.gson.Gson;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
 
@@ -21,9 +19,9 @@ public class restfulBooker {
     static String uriUser = "https://restful-booker.herokuapp.com/auth"; // url do usuario
     static String uriCreateBooking = "https://restful-booker.herokuapp.com/booking"; // url criar Book
     static String uriConsultarBooking = "https://restful-booker.herokuapp.com/booking/";
-    String cookieToken = "622ff4f710b4ad1";
+    private String token;
+    static String idBooking = "16";                 // codigo id do Booking
 
-    static String idBooking = "6849";                 // codigo id do Booking
     // Funções e Metodos
     // Funções de Apoio
     public static String lerArquivoJson(String arquivoJson) throws IOException {
@@ -80,14 +78,14 @@ public class restfulBooker {
 
     @Test
     @Order(3)
-    public void testarIncluirUser() throws IOException {
+    public String testarIncluirUser() throws IOException {
         // carregar os dados do nosso json
         String jsonBody = lerArquivoJson("src/test/resources/json/restfulBooker.json");
 
         //String userToken = "123456";                 // codigo id do usuario
 
         // realizar o teste
-        given()                                       // Dado que
+        Response resp = (Response) given()                                       // Dado que
                 .contentType(ct)                      // o tipo de conteudo
                 .log().all()                          // mostre tudo
                 .body(jsonBody)                       // corpo da requisiçãp
@@ -95,12 +93,22 @@ public class restfulBooker {
                 .post(uriUser)                        // Endpoint / Onde
                 .then()                                       // Então
                 .log().all()                          // mostre tudo na volta
-                .statusCode(200);                    // comunicação ida e volta ok
-        //.body("code", is(200))        // tag code é 200
-        //.body("username", is("admin")); // tag type é "unknown"
-        //.body("token", is(userToken));       // message é o userId
-    }
+                .statusCode(200)                   // comunicação ida e volta ok
+                .body("token", notNullValue())
+                .body("token", hasLength(15))
+                .extract();
 
+
+        // Extração do token da resposta
+        String token = extrairToken(resp);
+        System.out.println("token: " + token);
+
+        // retornar o token
+        return token;
+    }
+    private String extrairToken(Response resp) {
+        return resp.jsonPath().getString("token").substring(0);
+    }
 
     @Test
     @Order(4)
@@ -109,7 +117,7 @@ public class restfulBooker {
 
         given()
                 .contentType(ct)
-                .header("Cookie","token=" + cookieToken ) // Adiciona o cabeçalho de cookie
+                .header("Cookie","token=" + token ) // Adiciona o cabeçalho de cookie
                 .log().all()
                 .body(jsonBody)
                 .when()
@@ -128,7 +136,7 @@ public class restfulBooker {
 
         given()
                 .contentType(ct)
-                .header("Cookie","token=" + cookieToken ) // Adiciona o cabeçalho de cookie
+                .header("Cookie","token=" + token ) // Adiciona o cabeçalho de cookie
                 .log().all()
                 .when()
                 .delete(uriConsultarBooking + idBooking)
