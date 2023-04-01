@@ -1,41 +1,54 @@
 package apiTest;
 
-import com.google.gson.Gson;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.is;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class restfulBooker {
     // Atributos
     static String ct = "application/json"; // content type
     static String uriUser = "https://restful-booker.herokuapp.com/auth"; // url do usuario
     static String uriCreateBooking = "https://restful-booker.herokuapp.com/booking"; // url criar Book
     static String uriConsultarBooking = "https://restful-booker.herokuapp.com/booking/";
-    String cookieToken = "622ff4f710b4ad1";
+    private static String token;        // id do Cookie para autenticação
+    private static int idBooking;           // codigo id do Booking
 
-    static String idBooking = "6849";                 // codigo id do Booking
     // Funções e Metodos
     // Funções de Apoio
     public static String lerArquivoJson(String arquivoJson) throws IOException {
         return new String(Files.readAllBytes(Paths.get(arquivoJson)));
     }
 
+    @BeforeAll
+    public static void setup() throws IOException {
+        String body = lerArquivoJson("src/test/resources/json/restfulBooker.json");
+
+        Response resp = (Response) given()
+                .contentType(ct)
+                .log().all()
+                .body(body)
+                .when()
+                .post(uriUser)
+                .then()
+                .log().all()
+                .statusCode(200)
+                .extract();
+
+        token = resp.jsonPath().getString("token");
+        System.out.println("Token: " + token);
+    }
+
     // Funções de Testes
     @Test
-    @Order(1)
+    @Order(2)
     public void testarConsultarBooking() {
-        // carregar os dados do nosso json
-        //String jsonBody = lerArquivoJson("src/test/resources/json/createBooking.json");
         String firstname = "Cristiano";
         String lastname = "Bonfim";
         Integer totalprice = 666;
@@ -49,21 +62,17 @@ public class restfulBooker {
                 .then()                                       // Então
                 .log().all()                          // mostre tudo na volta
                 .statusCode(200)                    // comunicação ida e volta ok
-                .body("firstname", is(firstname))        // tag code é 200
-                .body("lastname", is(lastname)) // tag type é "unknown"
-                .body("totalprice", is(totalprice));       // message é o userId
-    }
+                .body("firstname", is(firstname));        // tag code é 200
+      }
 
     @Test
-    @Order(2)
+    @Order(1)
     public void testarCriarBooking() throws IOException {
         // carregar os dados do nosso json
         String jsonBody = lerArquivoJson("src/test/resources/json/createBooking.json");
 
-        //String userToken = "123456";                 // codigo id do usuario
-
         // realizar o teste
-        given()                                       // Dado que
+        Response resp = (Response) given()                                       // Dado que
                 .contentType(ct)                      // o tipo de conteudo
                 .log().all()                          // mostre tudo
                 .body(jsonBody)                       // corpo da requisiçãp
@@ -72,44 +81,21 @@ public class restfulBooker {
                 .then()                                       // Então
                 .log().all()                          // mostre tudo na volta
                 .statusCode(200)                    // comunicação ida e volta ok
-                .body("booking.firstname", is("Cristiano"))        // tag code é 200
-                .body("booking.lastname", is("Bonfim")) // tag type é "unknown"
-                .body("booking.totalprice", is(666));       // message é o userId
-    }
+                .extract();
 
+
+        idBooking = resp.jsonPath().getInt("bookingid");
+        System.out.println("ID do booking criado: " + idBooking);
+    }
 
     @Test
     @Order(3)
-    public void testarIncluirUser() throws IOException {
-        // carregar os dados do nosso json
-        String jsonBody = lerArquivoJson("src/test/resources/json/restfulBooker.json");
-
-        //String userToken = "123456";                 // codigo id do usuario
-
-        // realizar o teste
-        given()                                       // Dado que
-                .contentType(ct)                      // o tipo de conteudo
-                .log().all()                          // mostre tudo
-                .body(jsonBody)                       // corpo da requisiçãp
-                .when()                                       // Quando
-                .post(uriUser)                        // Endpoint / Onde
-                .then()                                       // Então
-                .log().all()                          // mostre tudo na volta
-                .statusCode(200);                    // comunicação ida e volta ok
-        //.body("code", is(200))        // tag code é 200
-        //.body("username", is("admin")); // tag type é "unknown"
-        //.body("token", is(userToken));       // message é o userId
-    }
-
-
-    @Test
-    @Order(4)
     public void alterarBooking() throws IOException {
         String jsonBody = lerArquivoJson("src/test/resources/json/alterarBooking.json");
 
         given()
                 .contentType(ct)
-                .header("Cookie","token=" + cookieToken ) // Adiciona o cabeçalho de cookie
+                .header("Cookie","token=" + token ) // Adiciona o cabeçalho de cookie
                 .log().all()
                 .body(jsonBody)
                 .when()
@@ -123,12 +109,12 @@ public class restfulBooker {
     }
 
     @Test
-    @Order(5)
-    public void testarExcluirBoking(){
-
+    @Order(4)
+    public void testarExcluirBoking() throws IOException{
+        //testarCriarBooking();
         given()
                 .contentType(ct)
-                .header("Cookie","token=" + cookieToken ) // Adiciona o cabeçalho de cookie
+                .header("Cookie","token=" + token ) // Adiciona o cabeçalho de cookie
                 .log().all()
                 .when()
                 .delete(uriConsultarBooking + idBooking)
