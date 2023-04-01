@@ -47,7 +47,7 @@ public class testeCalculadora {
         assertEquals(Double.valueOf(resultadoEsperado), resultadoAtual);
         System.out.println("Teste Soma: "+txtNum1 +"+"+ txtNum2 +" = "+ resultadoAtual);
     }
-
+//a
 
     @Test
     public void testeSubtrairDoisNumeros(){
