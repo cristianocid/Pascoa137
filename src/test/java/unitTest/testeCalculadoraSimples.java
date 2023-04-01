@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TesteCalculadoraSimples {
+public class testeCalculadoraSimples {
 
     @Test
     public void testeAreaQuadrado(){
