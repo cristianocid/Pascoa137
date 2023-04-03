@@ -111,7 +111,6 @@ public class restfulBooker {
     @Test
     @Order(4)
     public void testarExcluirBoking() throws IOException{
-        //testarCriarBooking();
         given()
                 .contentType(ct)
                 .header("Cookie","token=" + token ) // Adiciona o cabeçalho de cookie
