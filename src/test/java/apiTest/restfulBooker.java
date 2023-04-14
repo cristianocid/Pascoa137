@@ -50,8 +50,6 @@ public class restfulBooker {
     @Order(2)
     public void testarConsultarBooking() {
         String firstname = "Cristiano";
-        String lastname = "Bonfim";
-        Integer totalprice = 666;
 
         // realizar o teste
         given()                                       // Dado que
