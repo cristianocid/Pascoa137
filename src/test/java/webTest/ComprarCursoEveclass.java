@@ -36,78 +36,97 @@ public class ComprarCursoEveclass {
     }
     @Test
     public void testeCompraCurso() throws InterruptedException {
+        // Iniciando Teste acessando o site Testando Eveclass
         driver.get("https://testando.eveclass.com/pt");
         driver.manage().window().setSize(new Dimension(1580, 840));
+        // Aciona o botão "Começar Agora"
         driver.findElement(By.cssSelector(".button-custom:nth-child(4) > .button-text > span > span")).click();
+        // Aciona o botão "Entrar"
         driver.findElement(By.cssSelector("#support-action > span > span > span")).click();
         Thread.sleep(3000); // espera por 3 segundos
 
+        // Seleciona o Input "Email" e inseri os valores
         WebElement inputEmail = driver.findElement(By.cssSelector("input[data-vv-as='Email'][type='Email']"));
         String rotuloEmail = inputEmail.getAttribute("data-vv-as");
         System.out.println(rotuloEmail); // imprime "Seu Email"
         inputEmail.sendKeys("*email*");
 
+        // Seleciona o Input "password" e inseri os valores
         WebElement inputSenha = driver.findElement(By.cssSelector("input[type='password']"));
         String rotuloSenha = inputSenha.getAttribute("type");
         System.out.println(rotuloSenha); // imprime "Sua Senha"
         inputSenha.sendKeys("*senha*");
 
+        // Aciona o botão "Entrar"
         driver.findElement(By.xpath("//*[@id=\"auth-panel\"]/div[2]/div/div/div/div/div[2]/div/form/div[2]/button/span/span")).click();
         Thread.sleep(5000); // espera por 5 segundos
 
+        // Aciona o botão "Procurar Curso"
         driver.findElement(By.cssSelector("#my-courses > div > div > div > a > span > span")).click();
         Thread.sleep(3000); // espera por 3 segundos
 
+        // Seleciona o curso desejado
         driver.findElement(By.cssSelector("div[data-src='https://cdn.eveclass.com/p/62bf145fd8ff1ef247cd4eda/files/gallery/image/94c9d7f0-1354-11ed-9b44-a528fdf69ab8/thumbnail.png']")).click();
         Thread.sleep(3000); // espera por 3 segundos
 
+        // Aciona o botão "Comprar"
         driver.findElement(By.linkText("Comprar")).click();
         Thread.sleep(2000); // espera por 2 segundos
 
+        // Aciona o botão "Procurar Cursos"
         WebElement inputCpf = driver.findElement(By.cssSelector("input[data-vv-as='CPF'][type='text']"));
         String rotuloCpf = inputCpf.getAttribute("data-vv-as");
         System.out.println(rotuloCpf); // imprime "Seu CPF"
         inputCpf.sendKeys("56483801785");
 
+        // Seleciona o Input "telefone" e inseri os valores
         WebElement inputTelefone = driver.findElement(By.cssSelector("input[data-vv-as='Telefone'][type='text']"));
         String rotuloTelefone = inputTelefone.getAttribute("data-vv-as");
         System.out.println(rotuloTelefone); // imprime "Seu Telefone"
         inputTelefone.sendKeys("56483801785");
 
+        // Seleciona o Input "CEP" e inseri os valores
         WebElement inputCep = driver.findElement(By.cssSelector("input[data-vv-as='CEP'][type='text']"));
         String rotuloCep = inputCep.getAttribute("data-vv-as");
         System.out.println(rotuloCep); // imprime "Seu CEP"
         inputCep.sendKeys("21240250");
-
         Thread.sleep(2000); // espera por 2 segundos
+
+        // Seleciona o Input "Cidade" e inseri os valores
         WebElement inputCidade = driver.findElement(By.cssSelector("input[data-vv-as='Cidade'][type='text']"));
         String rotuloCidade = inputCidade.getAttribute("data-vv-as");
         System.out.println(rotuloCidade); // imprime "Sua Cidade"
         inputCidade.sendKeys("Rio de Janeiro");
 
+        // Seleciona o Input "Estado" e inseri os valores
         WebElement inputEstado = driver.findElement(By.cssSelector("input[data-vv-as='Estado'][type='text']"));
         String rotuloEstado = inputCidade.getAttribute("data-vv-as");
         System.out.println(rotuloEstado); // imprime "Sua Estado"
         inputEstado.sendKeys("RJ");
 
+        // Seleciona o Input "Bairro" e inseri os valores
         WebElement inputBairro = driver.findElement(By.cssSelector("input[data-vv-as='Bairro'][type='text']"));
         String rotuloBairro = inputBairro.getAttribute("data-vv-as");
         System.out.println(rotuloBairro); // imprime "Seu Bairro"
         inputBairro.sendKeys("Jardim America");
 
+        // Seleciona o Input "Rua" e inseri os valores
         WebElement inputRua = driver.findElement(By.cssSelector("input[data-vv-as='Rua'][type='text']"));
         String rotuloRua = inputRua.getAttribute("data-vv-as");
         System.out.println(rotuloRua); // imprime "Sua Rua"
         inputRua.sendKeys("Ibiuna");
 
+        // Seleciona o Input "Número" e inseri os valores
         WebElement inputNmr = driver.findElement(By.cssSelector("input[data-vv-as='Número'][type='text']"));
         String rotuloNmr = inputNmr.getAttribute("data-vv-as");
         System.out.println(rotuloNmr); // imprime "Seu Número"
         inputNmr.sendKeys("71");
 
+        // Aciona o botão "Confirmar Compra" e inseri os valores
         driver.findElement(By.cssSelector("#app > div > div.checkout-action > div > div.checkout-form > form > button > span > span > span")).click();
         Thread.sleep(4000); // espera por 3 segundos
 
+        // Verifica se aparece na tela o texto "Compra realizada com sucesso!"
         List<WebElement> elementos = driver.findElements(By.xpath("//h1[text()='Compra realizada com sucesso!']"));
         if (!elementos.isEmpty()) {
             System.out.println("Curso Comprado Com Sucesso!");
