@@ -49,13 +49,13 @@ public class ComprarCursoEveclass {
         WebElement inputEmail = driver.findElement(By.cssSelector("input[data-vv-as='Email'][type='Email']"));
         String rotuloEmail = inputEmail.getAttribute("data-vv-as");
         System.out.println(rotuloEmail); // imprime "Seu Email"
-        inputEmail.sendKeys("*email*");
+        inputEmail.sendKeys("email");
 
         // Seleciona o Input "password" e inseri os valores
         WebElement inputSenha = driver.findElement(By.cssSelector("input[type='password']"));
         String rotuloSenha = inputSenha.getAttribute("type");
         System.out.println(rotuloSenha); // imprime "Sua Senha"
-        inputSenha.sendKeys("*senha*");
+        inputSenha.sendKeys("senha");
 
         // Aciona o botão "Entrar"
         driver.findElement(By.xpath("//*[@id=\"auth-panel\"]/div[2]/div/div/div/div/div[2]/div/form/div[2]/button/span/span")).click();

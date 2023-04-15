@@ -56,13 +56,13 @@ public class CriarContaEveclass {
         WebElement inputEmail = driver.findElement(By.cssSelector("input[data-vv-as='Seu email'][type='text']"));
         String rotuloEmail = inputEmail.getAttribute("data-vv-as");
         System.out.println(rotuloEmail); // imprime "Seu Email"
-        inputEmail.sendKeys("cristiiiiaa@gmail.com");
+        inputEmail.sendKeys("email");
 
         // Seleciona o Input "Confirme seu email" e inseri os valores
         WebElement inputConfirmeEmail = driver.findElement(By.cssSelector("input[data-vv-as='Confirme seu email'][type='text']"));
         String rotuloConfirmeEmail = inputConfirmeEmail.getAttribute("data-vv-as");
         System.out.println(rotuloConfirmeEmail); // imprime "Seu Email repetido"
-        inputConfirmeEmail.sendKeys("cristiiiiaa@gmail.com");
+        inputConfirmeEmail.sendKeys("email");
 
         // Aciona o botão "Próximo"
         driver.findElement(By.cssSelector(".button-text > span")).click();
@@ -72,7 +72,7 @@ public class CriarContaEveclass {
         WebElement inputSenha = driver.findElement(By.cssSelector("input[type='password']"));
         String rotuloSenha = inputSenha.getAttribute("type");
         System.out.println(rotuloSenha); // imprime "Sua Senha"
-        inputSenha.sendKeys("123456789");
+        inputSenha.sendKeys("123456");
 
         // Verifica se a lista inputsSenha tem mais de um elemento antes de tentar acessar o segundo elemento.
         // Se houver mais de um elemento, o segundo elemento será selecionado e o texto "123456789" será inserido no campo de senha.
@@ -81,7 +81,7 @@ public class CriarContaEveclass {
 
         if (inputsSenha.size() > 1) {
             WebElement segundoInputSenha = inputsSenha.get(1);
-            segundoInputSenha.sendKeys("123456789");
+            segundoInputSenha.sendKeys("123456");
         } else {
             System.out.println("Apenas um campo de senha encontrado.");
         }
