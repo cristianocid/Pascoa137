@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 public class ComprarCursoEveclass {
 
@@ -44,12 +45,12 @@ public class ComprarCursoEveclass {
         WebElement inputEmail = driver.findElement(By.cssSelector("input[data-vv-as='Email'][type='Email']"));
         String rotuloEmail = inputEmail.getAttribute("data-vv-as");
         System.out.println(rotuloEmail); // imprime "Seu Email"
-        inputEmail.sendKeys("cristiano@gmail.com");
+        inputEmail.sendKeys("*email*");
 
         WebElement inputSenha = driver.findElement(By.cssSelector("input[type='password']"));
         String rotuloSenha = inputSenha.getAttribute("type");
         System.out.println(rotuloSenha); // imprime "Sua Senha"
-        inputSenha.sendKeys("4673631");
+        inputSenha.sendKeys("*senha*");
 
         driver.findElement(By.xpath("//*[@id=\"auth-panel\"]/div[2]/div/div/div/div/div[2]/div/form/div[2]/button/span/span")).click();
         Thread.sleep(5000); // espera por 5 segundos
@@ -105,7 +106,13 @@ public class ComprarCursoEveclass {
         inputNmr.sendKeys("71");
 
         driver.findElement(By.cssSelector("#app > div > div.checkout-action > div > div.checkout-form > form > button > span > span > span")).click();
-        Thread.sleep(5000); // espera por 3 segundos
-        System.out.println("Curso Comprado!!!"); // imprime "Sua Senha"
+        Thread.sleep(4000); // espera por 3 segundos
+
+        List<WebElement> elementos = driver.findElements(By.xpath("//h1[text()='Compra realizada com sucesso!']"));
+        if (!elementos.isEmpty()) {
+            System.out.println("Curso Comprado Com Sucesso!");
+        } else {
+            System.out.println("Elemento não encontrado!");
+        }
     }
 }
