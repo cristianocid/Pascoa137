@@ -36,51 +36,69 @@ public class CriarContaEveclass {
     }
     @Test
     public void testeCriarConta() throws InterruptedException {
+        // Iniciando Teste acessando o site Testando Eveclass
         driver.get("https://testando.eveclass.com/pt");
         driver.manage().window().setSize(new Dimension(1580, 840));
+        // Aciona o botão "Começar Agora"
         driver.findElement(By.cssSelector(".button-custom:nth-child(4) > .button-text > span > span")).click();
+        // Aciona o botão "Criar Conta"
         driver.findElement(By.cssSelector("#main-action > .button-text > span > span")).click();
         Thread.sleep(3000); // espera por 3 segundos
 
+        // Seleciona o Input "Seu nome completo" e inseri os valores
         WebElement inputNomeCompleto = driver.findElement(By.cssSelector("input[data-vv-as='Seu nome completo'][type='text']"));
         String rotuloNomeCompleto = inputNomeCompleto.getAttribute("data-vv-as");
         System.out.println(rotuloNomeCompleto); // imprime "Seu nome completo"
         Thread.sleep(3000); // espera por 3 segundos
         inputNomeCompleto.sendKeys("Cristiano");
-        Thread.sleep(3000); // espera por 3 segundos
 
+        // Seleciona o Input "Seu email" e inseri os valores
         WebElement inputEmail = driver.findElement(By.cssSelector("input[data-vv-as='Seu email'][type='text']"));
         String rotuloEmail = inputEmail.getAttribute("data-vv-as");
         System.out.println(rotuloEmail); // imprime "Seu Email"
-        inputEmail.sendKeys("cristiaaai@gmail.com");
-        Thread.sleep(3000); // espera por 3 segundos
+        inputEmail.sendKeys("cristiiiiaa@gmail.com");
 
+        // Seleciona o Input "Confirme seu email" e inseri os valores
         WebElement inputConfirmeEmail = driver.findElement(By.cssSelector("input[data-vv-as='Confirme seu email'][type='text']"));
         String rotuloConfirmeEmail = inputConfirmeEmail.getAttribute("data-vv-as");
         System.out.println(rotuloConfirmeEmail); // imprime "Seu Email repetido"
-        inputConfirmeEmail.sendKeys("cristiaaai@gmail.com");
+        inputConfirmeEmail.sendKeys("cristiiiiaa@gmail.com");
 
+        // Aciona o botão "Próximo"
         driver.findElement(By.cssSelector(".button-text > span")).click();
-        Thread.sleep(8000); // espera por 10 segundos
+        Thread.sleep(8000); // espera por 8 segundos
 
+        // Seleciona o Input "password" e inseri os valores
         WebElement inputSenha = driver.findElement(By.cssSelector("input[type='password']"));
         String rotuloSenha = inputSenha.getAttribute("type");
         System.out.println(rotuloSenha); // imprime "Sua Senha"
         inputSenha.sendKeys("123456789");
-        Thread.sleep(4000); // espera por 3 segundos
 
+        // Verifica se a lista inputsSenha tem mais de um elemento antes de tentar acessar o segundo elemento.
+        // Se houver mais de um elemento, o segundo elemento será selecionado e o texto "123456789" será inserido no campo de senha.
+        // Se houver apenas um elemento, uma mensagem de aviso será impressa no console.
         List<WebElement> inputsSenha = driver.findElements(By.cssSelector("input[type='password']"));
 
         if (inputsSenha.size() > 1) {
             WebElement segundoInputSenha = inputsSenha.get(1);
             segundoInputSenha.sendKeys("123456789");
-            System.out.println(inputsSenha); // imprime "Sua Senha repetida"
         } else {
             System.out.println("Apenas um campo de senha encontrado.");
         }
-        Thread.sleep(3000); // espera por 3 segundos
+
+        // Aciona o botão "Criar Conta"
         driver.findElement(By.cssSelector(".button-text > span")).click();
-        Thread.sleep(7000); // espera por 7 segundos
-        System.out.println("Conta Criada com Sucesso"); // imprime a Sucesso do Testes
+        Thread.sleep(3000); // espera por 3 segundos
+
+        // Verifica se o texto de confirmação da conta criada aparece na tela
+        // Encontrar o elemento que contém o texto "Cadastro concluído com sucesso!"
+        WebElement popup = driver.findElement(By.cssSelector("h2.swal2-title"));
+        // Verificar o texto do elemento
+        String texto = popup.getText();
+        if (texto.equals("Cadastro concluído com sucesso!")) {
+            System.out.println("Conta Criada com Sucesso!");
+        } else {
+            System.out.println("Erro ao exibir o popup.");
+        }
     }
 }
