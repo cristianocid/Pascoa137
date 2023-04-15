@@ -81,6 +81,6 @@ public class CriarContaEveclass {
         Thread.sleep(3000); // espera por 3 segundos
         driver.findElement(By.cssSelector(".button-text > span")).click();
         Thread.sleep(7000); // espera por 7 segundos
-        System.out.println("Conta Criada com Sucesso"); // imprime a Sucesso do Teste
+        System.out.println("Conta Criada com Sucesso"); // imprime a Sucesso do Testes
     }
 }
