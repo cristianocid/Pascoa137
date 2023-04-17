@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 public class CriarNovoCursoEveclass {
 
     private WebDriver driver;
@@ -33,6 +36,7 @@ public class CriarNovoCursoEveclass {
         driver = new ChromeDriver(options); // Instancia / Liga o Chrome Driver
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Espera até que o elemento seja encotrado
     }
     @AfterEach
     public void tearDown() {
@@ -51,31 +55,23 @@ public class CriarNovoCursoEveclass {
 
         // Aciona o botão "Entrar"
         driver.findElement(By.cssSelector("#support-action > span > span > span")).click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Espera até que o elemento seja encotrado
 
         // Seleciona o Input "Email" e inseri os valores
         WebElement inputEmail = driver.findElement(By.cssSelector("input[data-vv-as='Email'][type='Email']"));
-        String rotuloEmail = inputEmail.getAttribute("data-vv-as");
-        System.out.println(rotuloEmail); // imprime "Seu Email"
-        inputEmail.sendKeys("email");
+        inputEmail.sendKeys("email/admin");
 
         // Seleciona o Input "password" e inseri os valores
         WebElement inputSenha = driver.findElement(By.cssSelector("input[type='password']"));
-        String rotuloSenha = inputSenha.getAttribute("type");
-        System.out.println(rotuloSenha); // imprime "Sua Senha"
         inputSenha.sendKeys("senha");
 
         // Aciona o botão "Entrar"
         driver.findElement(By.xpath("//*[@id=\"auth-panel\"]/div[2]/div/div/div/div/div[2]/div/form/div[2]/button/span/span")).click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Espera até que o elemento seja encotrado
 
         // Aciona o botão "Cursos"
         driver.findElement(By.linkText("Cursos")).click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Espera até que o elemento seja encotrado
 
         // Aciona o botão "Novo Curso"
         driver.findElement(By.xpath("//*[@id=\"scroll-container\"]/div/div/div/div[2]/div[1]/div/div/div[2]/a/span/span/span")).click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Espera até que o elemento seja encotrado
 
         // Seleciona o elemento de rádio pelo texto da descrição
         WebElement radio = driver.findElement(By.xpath("//h3[contains(text(), 'Módulos')]/ancestor::div[@class='card-radio-option']"));
@@ -84,7 +80,6 @@ public class CriarNovoCursoEveclass {
         // Aciona o botão "Prosseguir"
         WebElement button = driver.findElement(By.cssSelector("button[class='button  button-default'] i[class='icon-right fas fa-arrow-right']"));
         button.click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Espera até que o elemento seja encotrado
 
         // Seleciona opção "Cronograma"
         WebElement cronograma = driver.findElement(By.cssSelector("i.far.fa-user-clock"));
@@ -93,30 +88,20 @@ public class CriarNovoCursoEveclass {
         // Aciona o botão "Prosseguir"
         WebElement button2 = driver.findElement(By.cssSelector("button[type='submit']"));
         button2.click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Espera até que o elemento seja encotrado
 
         // Seleciona o Input "telefone" e inseri os valores
         WebElement inputNome = driver.findElement(By.cssSelector("input[data-vv-as='Nome'][type='text']"));
-        String rotuloTelefone = inputNome.getAttribute("data-vv-as");
-        System.out.println(rotuloTelefone); // imprime "Seu Telefone"
         inputNome.sendKeys("Teste Novo Curso");
 
         // Aciona o botão "Salvar"
         WebElement botaoSalvar = driver.findElement(By.xpath("//span[contains(text(), 'Salvar')]"));
         botaoSalvar.click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); // Espera até que o elemento seja encotrado
 
-        // Procurando o Nome do Curso para verficação se o Curso foi Criado
-        WebElement element = driver.findElement(By.xpath("//h1[text()='Teste Novo Curso']"));
-        // Verifica se o elemento foi encontrado
-        if (element.isDisplayed()) {
-            System.out.println("O elemento foi encontrado. Curso Criado com Sucesso!");
-        } else {
-            System.out.println("O elemento não foi encontrado.");
-        }
+        // Verifica se o texto esperado é igual ao texto atual
+        assertThat(driver.findElement(By.id("swal2-title")).getText(), is("O curso foi criado!"));
 
         // Gera um print-screen do final do Teste para verificação
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(screenshot, new File("src/test/resources/utils/print/evidencia1.png"));
+        FileUtils.copyFile(screenshot, new File("src/test/resources/utils/print/evidenciaCriarCurso.png"));
     }
 }
