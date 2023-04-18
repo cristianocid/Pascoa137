@@ -104,14 +104,6 @@ public class ComprarCursoEveclass {
         // Verifica se o texto esperado é igual ao texto atual
         assertThat(driver.findElement(By.cssSelector("div.title h1")).getText(), is("Compra realizada com sucesso!"));
 
-        // Verifica se aparece na tela o texto "Compra realizada com sucesso!"
-        //List<WebElement> elementos = driver.findElements(By.xpath("//h1[text()='Compra realizada com sucesso!']"));
-       //if (!elementos.isEmpty()) {
-            //System.out.println("Compra realizada com sucesso!");
-        //} else {
-        //    System.out.println("Elemento não encontrado!");
-        //}
-
         // Gera um print-screen do final do Teste para verificação
         File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(screenshot, new File("src/test/resources/utils/print/evidenciaComprarCurso.png"));
