@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 // Classe
-public class testeCalculadora {
+public class testeCalculadoraCSV {
     // Atributos
 
     // Funções e Métodos
